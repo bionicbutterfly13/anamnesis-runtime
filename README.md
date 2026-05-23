@@ -62,6 +62,7 @@ can implement without pulling host dependencies into the package:
   manual review.
 - `TelemetryPort` for runtime diagnostics that can be routed to any host
   observability system.
+- `InMemoryEventTransport` for local tests and in-process experiments.
 
 Concrete EventBus, Redis Streams, RabbitMQ, Graphiti, Qdrant, Sakshi, LinOSS,
 MemEvolve, or Dionysus integrations belong in adapters outside the core runtime.

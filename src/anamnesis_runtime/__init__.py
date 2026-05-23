@@ -1,6 +1,12 @@
 """Host-neutral episodic-semantic memory runtime."""
 
 from anamnesis_runtime.buffer import InMemoryMessageBuffer
+from anamnesis_runtime.events import (
+    InMemoryEventTransport,
+    event_type_matches,
+    memory_event_from_dict,
+    memory_event_to_dict,
+)
 from anamnesis_runtime.models import (
     BasinContext,
     ConsolidationDecision,
@@ -48,6 +54,7 @@ __all__ = [
     "GateDecisionAction",
     "GatePort",
     "GateRequest",
+    "InMemoryEventTransport",
     "InMemoryEpisodicStore",
     "InMemoryMessageBuffer",
     "InMemorySemanticStore",
@@ -73,6 +80,9 @@ __all__ = [
     "SourceKind",
     "TelemetryPort",
     "TelemetryRecord",
+    "event_type_matches",
+    "memory_event_from_dict",
+    "memory_event_to_dict",
 ]
 
 __version__ = "0.1.0"

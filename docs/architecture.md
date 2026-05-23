@@ -39,6 +39,14 @@ and semantic consolidation.
 The strategy does not own host persistence, graph memory, vector projection,
 transport, gates, or application policy. Those remain adapter concerns.
 
+## Transport Boundary
+
+Core event support is limited to `MemoryEvent`, serialization helpers,
+publisher/subscriber protocols, namespace wildcard matching, and
+`InMemoryEventTransport` for local tests. EventBus, Redis Streams, and RabbitMQ
+bridges should live as optional extras or separate adapter packages so the core
+runtime stays standard-library-only.
+
 ## Non-goals
 
 - No direct Dionysus imports.
