@@ -33,8 +33,24 @@ LinOSS, Graphiti, Qdrant, EventBus, Redis, RabbitMQ, and host-app imports.
 
 ## Quickstart
 
+Development install:
+
+```sh
+uv sync --extra dev
+uv run pytest
+```
+
+After an approved PyPI release, downstream projects should install the
+distribution package:
+
+```sh
+pip install anamnesis-runtime
+```
+
+Import from the Python package:
+
 ```python
-from anamnesis_runtime import MemoryRuntime, NemoriStrategy
+from anamnesis_runtime import MemoryRuntime, NemoriStrategy, PriorMemory
 ```
 
 The initial skeleton provides the contracts and in-memory stores needed for
@@ -63,6 +79,15 @@ can implement without pulling host dependencies into the package:
 - `TelemetryPort` for runtime diagnostics that can be routed to any host
   observability system.
 - `InMemoryEventTransport` for local tests and in-process experiments.
+- `GraphMutationPort`, `ProjectionPort`, `RoutingPort`, `EvolutionPort`, and
+  `EventBridgePort` for host-owned persistence, projection, routing, memory
+  process adaptation, and event bridging.
 
 Concrete EventBus, Redis Streams, RabbitMQ, Graphiti, Qdrant, Sakshi, LinOSS,
 MemEvolve, or Dionysus integrations belong in adapters outside the core runtime.
+
+## Release status
+
+`0.1.0` is a pre-alpha runtime foundation. It is ready for local package
+validation and Dionysus-side adapter planning, but PyPI publication should wait
+until the license is chosen and release metadata is finalized.

@@ -47,6 +47,22 @@ publisher/subscriber protocols, namespace wildcard matching, and
 bridges should live as optional extras or separate adapter packages so the core
 runtime stays standard-library-only.
 
+## Dionysus Adapter Boundary
+
+Anamnesis exposes neutral adapter contracts for host-owned integration code:
+
+- `GraphMutationPort` accepts `GraphMutation` records for durable graph intent.
+- `ProjectionPort` accepts `ProjectionPayload` records for vector projection.
+- `RoutingPort` accepts `RoutingRequest` and returns `RoutingDecision`.
+- `EvolutionPort` accepts `EvolutionRequest` and returns `EvolutionResult`.
+- `GatePort` remains the canonical witness/write-guard contract.
+- `EventBridgePort` composes neutral memory event publishing and subscription.
+
+Real Dionysus adapters should live in Dionysus or an optional integration
+package. They must translate these contracts to Graphiti, Qdrant,
+MemoryBasinRouter, MemEvolve, Sakshi, EventBus, Redis Streams, or RabbitMQ
+without adding those imports to Anamnesis core.
+
 ## Non-goals
 
 - No direct Dionysus imports.
