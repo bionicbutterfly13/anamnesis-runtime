@@ -41,3 +41,18 @@ The initial skeleton provides the contracts and in-memory stores needed for
 offline tests. Nemori belongs here as the first concrete memory strategy, while
 production adapters should live outside this package unless they are
 host-neutral.
+
+## Core extension ports
+
+Anamnesis core defines neutral ports for extension points that host applications
+can implement without pulling host dependencies into the package:
+
+- `MemoryEventPublisher` and `MemoryEventSubscriber` for transport-neutral
+  memory events.
+- `GatePort` for write/review decisions such as allow, block, quarantine, or
+  manual review.
+- `TelemetryPort` for runtime diagnostics that can be routed to any host
+  observability system.
+
+Concrete EventBus, Redis Streams, RabbitMQ, Graphiti, Qdrant, Sakshi, LinOSS,
+MemEvolve, or Dionysus integrations belong in adapters outside the core runtime.

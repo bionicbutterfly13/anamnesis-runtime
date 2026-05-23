@@ -44,6 +44,15 @@ class ConsolidationOperation(StrEnum):
     CONFLICT = "conflict"
 
 
+class GateDecisionAction(StrEnum):
+    """Possible outcomes from a host-neutral memory gate."""
+
+    ALLOW = "allow"
+    BLOCK = "block"
+    QUARANTINE = "quarantine"
+    REVIEW = "review"
+
+
 @dataclass(frozen=True, slots=True)
 class ContentPart:
     """Typed multimodal content placeholder.
@@ -187,3 +196,81 @@ class NemoriRecallResult:
     ranking_metadata: dict[str, Any] = field(default_factory=dict)
     basin_metadata: dict[str, Any] = field(default_factory=dict)
 
+
+@dataclass(frozen=True, slots=True)
+class MemoryEvent:
+    """Transport-neutral event emitted by the memory runtime."""
+
+    event_id: str
+    event_type: str
+    schema_version: int
+    occurred_at: datetime
+    source: str
+    payload: dict[str, Any]
+    correlation_id: str | None = None
+    causation_id: str | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if not self.event_id:
+            raise ValueError("event_id is required")
+        if not self.event_type:
+            raise ValueError("event_type is required")
+        if self.schema_version < 1:
+            raise ValueError("schema_version must be positive")
+        if self.occurred_at.tzinfo is None:
+            raise ValueError("occurred_at must be timezone-aware")
+        if not self.source:
+            raise ValueError("source is required")
+
+
+@dataclass(frozen=True, slots=True)
+class GateRequest:
+    """Host-neutral request for memory write or recall review."""
+
+    request_id: str
+    subject: str
+    payload: dict[str, Any]
+    occurred_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if not self.request_id:
+            raise ValueError("request_id is required")
+        if not self.subject:
+            raise ValueError("subject is required")
+        if self.occurred_at.tzinfo is None:
+            raise ValueError("occurred_at must be timezone-aware")
+
+
+@dataclass(frozen=True, slots=True)
+class GateDecision:
+    """Host-neutral gate decision returned before memory is accepted or routed."""
+
+    action: GateDecisionAction
+    request_id: str
+    reason: str
+    decided_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if not self.request_id:
+            raise ValueError("request_id is required")
+        if self.decided_at.tzinfo is None:
+            raise ValueError("decided_at must be timezone-aware")
+
+
+@dataclass(frozen=True, slots=True)
+class TelemetryRecord:
+    """Host-neutral runtime diagnostic record."""
+
+    name: str
+    value: int | float | str | bool
+    occurred_at: datetime
+    attributes: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if not self.name:
+            raise ValueError("name is required")
+        if self.occurred_at.tzinfo is None:
+            raise ValueError("occurred_at must be timezone-aware")

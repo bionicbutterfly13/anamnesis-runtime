@@ -13,6 +13,7 @@ systems.
 | Predict-calibrate | Prior retrieval contract, prediction, distillation, consolidation | LLM provider selection and policy |
 | Recall | Unified recall result shape | API routes, dashboards, auth |
 | Persistence | Store protocols and test stores | Graphiti, Qdrant, Postgres, Neo4j, EventBus |
+| Events/gates/telemetry | Neutral records and ports | EventBus, Redis, RabbitMQ, Sakshi, observability backends |
 
 ## Runtime Flow
 
@@ -34,4 +35,5 @@ messages
 - No direct Graphiti, Qdrant, Neo4j, or EventBus imports.
 - No Elume, Autonoesis, or Sakshi ownership of memory formation.
 - No LinOSS ownership of memory formation.
+- No concrete Redis or RabbitMQ transport in core.
 - No production activation policy.

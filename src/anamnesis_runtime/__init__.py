@@ -6,6 +6,10 @@ from anamnesis_runtime.models import (
     ConsolidationDecision,
     ConsolidationOperation,
     ContentPart,
+    GateDecision,
+    GateDecisionAction,
+    GateRequest,
+    MemoryEvent,
     MemoryType,
     NemoriEpisode,
     NemoriMessage,
@@ -16,6 +20,13 @@ from anamnesis_runtime.models import (
     PriorMemory,
     Role,
     SourceKind,
+    TelemetryRecord,
+)
+from anamnesis_runtime.ports import (
+    GatePort,
+    MemoryEventPublisher,
+    MemoryEventSubscriber,
+    TelemetryPort,
 )
 from anamnesis_runtime.runtime import MemoryRuntime
 from anamnesis_runtime.stores import InMemoryEpisodicStore, InMemorySemanticStore
@@ -25,9 +36,16 @@ __all__ = [
     "ConsolidationDecision",
     "ConsolidationOperation",
     "ContentPart",
+    "GateDecision",
+    "GateDecisionAction",
+    "GatePort",
+    "GateRequest",
     "InMemoryEpisodicStore",
     "InMemoryMessageBuffer",
     "InMemorySemanticStore",
+    "MemoryEvent",
+    "MemoryEventPublisher",
+    "MemoryEventSubscriber",
     "MemoryRuntime",
     "MemoryType",
     "NemoriEpisode",
@@ -39,7 +57,8 @@ __all__ = [
     "PriorMemory",
     "Role",
     "SourceKind",
+    "TelemetryPort",
+    "TelemetryRecord",
 ]
 
 __version__ = "0.1.0"
-

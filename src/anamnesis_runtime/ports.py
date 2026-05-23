@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Awaitable, Callable, Sequence
 from typing import Protocol
 
 from anamnesis_runtime.models import (
     ConsolidationDecision,
+    GateDecision,
+    GateRequest,
+    MemoryEvent,
     NemoriEpisode,
     NemoriMessage,
     NemoriRawEpisode,
@@ -14,7 +17,10 @@ from anamnesis_runtime.models import (
     NemoriSemanticInsight,
     Prediction,
     PriorMemory,
+    TelemetryRecord,
 )
+
+MemoryEventHandler = Callable[[MemoryEvent], Awaitable[None] | None]
 
 
 class MessageBuffer(Protocol):
@@ -75,3 +81,19 @@ class BasinPort(Protocol):
     async def route(self, decision: ConsolidationDecision) -> None: ...
 
     async def annotate_recall(self, result: NemoriRecallResult) -> NemoriRecallResult: ...
+
+
+class MemoryEventPublisher(Protocol):
+    async def publish(self, event: MemoryEvent) -> None: ...
+
+
+class MemoryEventSubscriber(Protocol):
+    async def subscribe(self, event_type: str, handler: MemoryEventHandler) -> None: ...
+
+
+class GatePort(Protocol):
+    async def review(self, request: GateRequest) -> GateDecision: ...
+
+
+class TelemetryPort(Protocol):
+    async def record(self, record: TelemetryRecord) -> None: ...
