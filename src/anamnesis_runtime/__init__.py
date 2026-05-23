@@ -1,5 +1,22 @@
 """Host-neutral episodic-semantic memory runtime."""
 
+from anamnesis_runtime.adapters import (
+    AdapterContractError,
+    EventBridgePort,
+    EventEnvelope,
+    EvolutionAction,
+    EvolutionPort,
+    EvolutionRequest,
+    EvolutionResult,
+    GraphMutation,
+    GraphMutationOperation,
+    GraphMutationPort,
+    ProjectionPayload,
+    ProjectionPort,
+    RoutingDecision,
+    RoutingPort,
+    RoutingRequest,
+)
 from anamnesis_runtime.buffer import InMemoryMessageBuffer
 from anamnesis_runtime.events import (
     InMemoryEventTransport,
@@ -46,14 +63,24 @@ from anamnesis_runtime.strategies.nemori import (
 )
 
 __all__ = [
+    "AdapterContractError",
     "BasinContext",
     "ConsolidationDecision",
     "ConsolidationOperation",
     "ContentPart",
+    "EventBridgePort",
+    "EventEnvelope",
+    "EvolutionAction",
+    "EvolutionPort",
+    "EvolutionRequest",
+    "EvolutionResult",
     "GateDecision",
     "GateDecisionAction",
     "GatePort",
     "GateRequest",
+    "GraphMutation",
+    "GraphMutationOperation",
+    "GraphMutationPort",
     "InMemoryEventTransport",
     "InMemoryEpisodicStore",
     "InMemoryMessageBuffer",
@@ -75,8 +102,13 @@ __all__ = [
     "Prediction",
     "PriorAwarePredictor",
     "PriorMemory",
+    "ProjectionPayload",
+    "ProjectionPort",
     "RawEpisodePredictionErrorDistiller",
     "Role",
+    "RoutingDecision",
+    "RoutingPort",
+    "RoutingRequest",
     "SourceKind",
     "TelemetryPort",
     "TelemetryRecord",
