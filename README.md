@@ -34,13 +34,22 @@ LinOSS, Graphiti, Qdrant, EventBus, Redis, RabbitMQ, and host-app imports.
 ## Quickstart
 
 ```python
-from anamnesis_runtime import MemoryRuntime
+from anamnesis_runtime import MemoryRuntime, NemoriStrategy
 ```
 
 The initial skeleton provides the contracts and in-memory stores needed for
 offline tests. Nemori belongs here as the first concrete memory strategy, while
 production adapters should live outside this package unless they are
 host-neutral.
+
+## Built-in strategies
+
+Anamnesis houses memory strategies without making any one strategy the package
+identity. The first built-in strategy is `NemoriStrategy`, a host-neutral
+episodic-semantic pipeline that buffers messages, segments them into raw
+episodes, generates narrative episodes, retrieves semantic priors before
+prediction, distills prediction error against raw source messages, consolidates
+semantic insights, and returns recall results.
 
 ## Core extension ports
 

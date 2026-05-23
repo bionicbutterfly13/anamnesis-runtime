@@ -29,6 +29,16 @@ messages
   -> recall episodic + semantic memory
 ```
 
+## Strategy Boundary
+
+`NemoriStrategy` is the first built-in strategy. It composes the core runtime
+with host-neutral components for message-count segmentation, narrative episode
+generation, prior-aware prediction, raw-episode prediction-error distillation,
+and semantic consolidation.
+
+The strategy does not own host persistence, graph memory, vector projection,
+transport, gates, or application policy. Those remain adapter concerns.
+
 ## Non-goals
 
 - No direct Dionysus imports.
